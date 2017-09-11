@@ -240,87 +240,156 @@ if(Input::exists()) {
 		break;
 
 
-		case "createQuestion":
+        case "createQuestion":
 
-		$user = new User();
-		if($user->data()->role != 'teacher'){
-			return; /*Solo un maestro puede crear preguntas*/
-		}
+            $user = new User();
+            if($user->data()->role != 'teacher'){
+                return; /*Solo un maestro puede crear preguntas*/
+            }
 
-		//Necesitamos el id del profesor, que es el usuario logueado para ligar las preguntas con el
-		$teacherId = $user->data()->id;
+            //Necesitamos el id del profesor, que es el usuario logueado para ligar las preguntas con el
+            $teacherId = $user->data()->id;
 
-		try {
-			//Esto lo usamos para convertir el objeto que le mandamos con toda la informacion
-            //De esta forma nos queda como un hash map en el que podemos accesar a todos los valores facilmente
-			$data = json_decode($_POST['data'],true);
-			//Datos de la pregunta
-			$text = $data['text'];
+            try {
+                //Esto lo usamos para convertir el objeto que le mandamos con toda la informacion
+                //De esta forma nos queda como un hash map en el que podemos accesar a todos los valores facilmente
+                $data = json_decode($_POST['data'],true);
+                //Datos de la pregunta
+                $text = $data['text'];
 
-			//Validar que la pregunta tenga texto
-			if (empty($text)) {
-				$response = array( "message" => "No se puede crear una pregunta vacia");
-				die(json_encode($response));
-			}
+                //Validar que la pregunta tenga texto
+                if (empty($text)) {
+                    $response = array( "message" => "No se puede crear una pregunta vacia");
+                    die(json_encode($response));
+                }
 
-			//var_dump($text);
-			//$data = json_decode(stripslashes($_POST['data']),true);
-			//var_dump($data);
-			$url  =  $data['url'];
-			$grade = $data['grade'];
-			$topic = $data['topic'];
+                //var_dump($text);
+                //$data = json_decode(stripslashes($_POST['data']),true);
+                //var_dump($data);
+                $url  =  $data['url'];
+                $grade = $data['grade'];
+                $topic = $data['topic'];
+                $name = $data['name'];
 
-			$db = DB::getInstance();
+                $db = DB::getInstance();
 
-			$options = array(4);
+                $options = array(4);
 
-			//Crear las 4 respuestas
-			$ans = new Answer();
-			for ($i = 1; $i <= 4; $i++) {
-				if (empty($data['ans'.$i]) && empty($data['urla'.$i]) ) {
-					$response = array( "message" => "No se puede crear una pregunta sin respuesta");
-					die(json_encode($response));
-				}
+                //Crear las 4 respuestas
+                $ans = new Answer();
+                for ($i = 1; $i <= 4; $i++) {
+                    if (empty($data['ans'.$i]) && empty($data['urla'.$i]) ) {
+                        $response = array( "message" => "No se puede crear una pregunta sin respuesta");
+                        die(json_encode($response));
+                    }
 
-				//Crear la respuesta
-				$ans->create(array(
-					'text' => $data['ans'.$i],
-					'textFeedback' => $data['feed'.$i],
-					'urlImage' => $data['urla'.$i],
-					'imageFeedback' => $data['urlf'.$i],
-    			'correct' => ($i==1)? true : false,  //La primera respuesta siempre sera la correcta
-    			));
+                    //Crear la respuesta
+                    $ans->create(array(
+                        'text' => $data['ans'.$i],
+                        'textFeedback' => $data['feed'.$i],
+                        'urlImage' => $data['urla'.$i],
+                        'imageFeedback' => $data['urlf'.$i],
+                        'correct' => ($i==1)? true : false,  //La primera respuesta siempre sera la correcta
+                    ));
 
-    			//Obtener el id de la respuesta
-				$answerId = intval($db->lastInsertId());
-				$options[$i-1] = $answerId;
-			}
+                    //Obtener el id de la respuesta
+                    $answerId = intval($db->lastInsertId());
+                    $options[$i-1] = $answerId;
+                }
 
-			// Crear la pregunta
-			$question = new Question();
-			$question->create(array(
-				'professor' => intval($teacherId),
-				'topic' => intval($topic),
-				'difficulty' => intval($grade),
-				'urlImage' => $url,
-				'text' => $text,
-				'optionA' => $options[0],
-				'optionB' => $options[1],
-				'optionC' => $options[2],
-				'optionD' => $options[3]
-				));
+                // Crear la pregunta
+                $question = new Question();
+                $question->create(array(
+                    'name' => $name,
+                    'professor' => intval($teacherId),
+                    'topic' => intval($topic),
+                    'difficulty' => intval($grade),
+                    'urlImage' => $url,
+                    'text' => $text,
+                    'optionA' => $options[0],
+                    'optionB' => $options[1],
+                    'optionC' => $options[2],
+                    'optionD' => $options[3]
+                ));
 
-			// Obtener el id que se le asigno en la BD
-			$questionId = intval($db->lastInsertId());
+                // Obtener el id que se le asigno en la BD
+                $questionId = intval($db->lastInsertId());
 
 
-		} catch(Exception $e) {
-			$response = array( "message" => "Error:005 ".$e->getMessage());
-			die(json_encode($response));
-		}
-		$response = array( "message" => "success");
-		echo json_encode($response);
-		break;
+            } catch(Exception $e) {
+                $response = array( "message" => "Error:005 ".$e->getMessage());
+                die(json_encode($response));
+            }
+            $response = array( "message" => "success");
+            echo json_encode($response);
+            break;
+
+        case "updateQuestion":
+
+            $user = new User();
+            if($user->data()->role != 'teacher'){
+                return; /*Solo un maestro puede editar preguntas*/
+            }
+
+            //Necesitamos el id del profesor, que es el usuario logueado para ligar las preguntas con el
+            $teacherId = $user->data()->id;
+
+            try {
+                //Esto lo usamos para convertir el objeto que le mandamos con toda la informacion
+                //De esta forma nos queda como un hash map en el que podemos accesar a todos los valores facilmente
+                $data = json_decode($_POST['data'],true);
+
+
+                $db = DB::getInstance();
+
+                // Actualizar pregunta
+                $url  =  $data['url'];
+                $grade = $data['grade'];
+                $topic = $data['topic'];
+                $name = $data['name'];
+                $text = $data['text'];
+                $questionId = $data['qId'];
+
+                if (empty($text)) {
+                    $response = array( "message" => "No se puede crear una pregunta vacia");
+                    die(json_encode($response));
+                }
+
+                $question = new Question();
+                $question->update($questionId, array(
+                    'name' => $name,
+                    'topic' => intval($topic),
+                    'difficulty' => intval($grade),
+                    'urlImage' => $url,
+                    'text' => $text,
+                ));
+
+                // Actualizar opciones
+                $ans = new Answer();
+                for ($i = 1; $i <= 4; $i++) {
+                    $qId = $data['q'.$i."id"];
+                    if (empty($data['ans'.$i]) && empty($data['urla'.$i]) ) {
+                        $response = array( "message" => "No se puede crear una pregunta sin respuesta");
+                        die(json_encode($response));
+                    }
+
+                    //Crear la respuesta
+                    $ans->update($qId,array(
+                        'text' => $data['ans'.$i],
+                        'textFeedback' => $data['feed'.$i],
+                        'urlImage' => $data['urla'.$i],
+                        'imageFeedback' => $data['urlf'.$i],
+                    ));
+                }
+
+
+            } catch(Exception $e) {
+                $response = array( "message" => "Error:005 ".$e->getMessage());
+                die(json_encode($response));
+            }
+            $response = array( "message" => "success");
+            echo json_encode($response);
+            break;
 
 		case "filterQuestions":
 
