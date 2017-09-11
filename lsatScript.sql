@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `groups` (
 CREATE TABLE IF NOT EXISTS `question` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `text` text NOT NULL,
+  `name` text NOT NULL,
   `urlImage` text,
   `difficulty` int(11) NOT NULL,
   `topic` int(11) NOT NULL,
