@@ -33,13 +33,21 @@ $topics = $topic->getTopics();
 
         <form id="newQuestion">
 
-          <div class="row">
-            <div class="large-12 columns">
-              <label>Texto de la pregunta
-                <textarea id="qtext" name="text" style="width:100%; height: 200px;"></textarea>
-              </label>
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>Nombre
+                        <textarea id="qname" name="name" style="width:100%; height: 200px;"></textarea>
+                    </label>
+                </div>
             </div>
-          </div>
+
+            <div class="row">
+                <div class="large-12 columns">
+                    <label>Texto de la pregunta
+                        <textarea id="qtext" name="text" style="width:100%; height: 200px;"></textarea>
+                    </label>
+                </div>
+            </div>
 
           <div class="row">
             <div class="large-12 columns">
@@ -200,6 +208,7 @@ $topics = $topic->getTopics();
       var grade  = $("#qgrade").val();
       var url    = $("#qurl").val();
       var text   = $("#qtext").val();
+      var name   = $("#qname").val();
       console.log(text);
 
       var len = fields.length,
