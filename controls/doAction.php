@@ -367,7 +367,7 @@ if(Input::exists()) {
                 // Actualizar opciones
                 $ans = new Answer();
                 for ($i = 1; $i <= 4; $i++) {
-                    $qId = $data['q'.$i."id"];
+                    $qId = $data['a'.$i."Id"];
                     if (empty($data['ans'.$i]) && empty($data['urla'.$i]) ) {
                         $response = array( "message" => "No se puede crear una pregunta sin respuesta");
                         die(json_encode($response));

@@ -17,23 +17,23 @@ if($qId == "" || !is_numeric($qId)){
 }
 
 $questionToEdit = new Question();
-if(!$questionToEdit->find($qId)){
+if(!$questionToEdit->getQuestion($qId)){
     //La pregunta no existe
     Redirect::to('./index.php');
 }
-$questionToEdit = $questionToEdit->data();
+$questionToEdit = $questionToEdit->getQuestion($qId)[0];
 
 $answer = new Answer();
-$answerA = answer.find($answer.optionA);
-$answerB = answer.find($answer.optionB);
-$answerC = answer.find($answer.optionC);
-$answerD = answer.find($answer.optionD);
+$answerA = $answer->getAnswer($questionToEdit->optionA)[0];
+$answerB = $answer->getAnswer($questionToEdit->optionB)[0];
+$answerC = $answer->getAnswer($questionToEdit->optionC)[0];
+$answerD = $answer->getAnswer($questionToEdit->optionD)[0];
 ?>
 
 <!doctype html>
 <html class="no-js" lang="en">
 <head>
-  <title>LSAT | Crear pregunta</title>
+  <title>LSAT | Editar pregunta</title>
   <?php include 'includes/templates/headTags.php' ?>
   <link rel="stylesheet" href="css/jquery.wysiwyg.css" type="text/css"/>
 </head>
@@ -48,7 +48,7 @@ $answerD = answer.find($answer.optionD);
       <?php include 'includes/templates/teacherSidebar.php' ?>
       <div class="large-9 medium-8 columns">
         <br/>
-        <h3>Crear nueva pregunta</h3>
+        <h3>Editar pregunta</h3>
         <hr>
 
         <form id="newQuestion">
@@ -56,7 +56,7 @@ $answerD = answer.find($answer.optionD);
             <div class="row">
                 <div class="large-12 columns">
                     <label>Nombre
-                        <input type="text" id="qname" name="name" placeholder="Nombre corto de la pregunta" value="<?php echo $questionToEdit->name; ?>" style="width:100%; height: 200px;"></input>
+                        <input type="text" id="qname" name="name" placeholder="Nombre corto de la pregunta" value="<?php echo $questionToEdit->name; ?>"></input>
                     </label>
                 </div>
             </div>
@@ -74,7 +74,7 @@ $answerD = answer.find($answer.optionD);
           <div class="row">
             <div class="large-12 columns">
               <label>Url media
-                <input type="text" id="qurl" name="url" value="<?php echo $questionToEdit->url; ?>" placeholder="URL de una imagen o video que ayude a explicar la pregunta" />
+                <input type="text" id="qurl" name="url" value="<?php echo $questionToEdit->urlImage; ?>" placeholder="URL de una imagen o video que ayude a explicar la pregunta" />
               </label>
             </div>
           </div>
@@ -204,7 +204,7 @@ $answerD = answer.find($answer.optionD);
 
           <br/>
 
-          <a href="#" onclick="editQuestion()" class="button round small right">Crear</a>
+          <a href="#" onclick="editQuestion()" class="button round small right">Guardar</a>
 
         </form>
 
@@ -240,14 +240,12 @@ $answerD = answer.find($answer.optionD);
     function editQuestion(){
 
       var fields = $("#newQuestion").serializeArray();
-//      console.log(fields);
 
       var topic  = $("#qtopic").val();
       var grade  = $("#qgrade").val();
       var url    = $("#qurl").val();
       var text   = $("#qtext").val();
       var name   = $("#qname").val();
-      console.log(text);
 
       var len = fields.length,
       dataObj = {};
@@ -266,7 +264,7 @@ $answerD = answer.find($answer.optionD);
       console.log(data);
 
 
-      $.post( "controls/doAction.php", {  action: "udpateQuestion", data: data})
+      $.post( "controls/doAction.php", {  action: "updateQuestion", data: data})
       .done(function( data ) {
 
         data = JSON.parse(data);
