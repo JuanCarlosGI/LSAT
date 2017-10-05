@@ -14,6 +14,7 @@
 
         <li class="heading">Preguntas</li>
         <li><a href="createQuestion.php" title="">Crear nueva pregunta</a></li>
+        <li><a href="questions.php" title="">Mis preguntas</a></li>
 
         <li class="divider"></li>
 

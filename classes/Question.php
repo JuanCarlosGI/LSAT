@@ -31,6 +31,16 @@ class Question {
 		return array();
 	}
 
+	public function getQuestionsForTeacher($techerId = null){
+		if($teacherId = null) return;
+
+		$db = $this->_db->get($this->_tableName, array('professor', '=', $teacherId));
+
+		if($db && $db->count()) {
+			return $db->results();
+		}
+	}
+
 	public function getQuestion($id){
 
 		$sql = "SELECT * FROM question WHERE id = ?";
@@ -55,6 +65,15 @@ class Question {
 		}
 
 		return array();
+	}
+
+	public function getAll(){
+		$sql = "SELECT * FROM question";
+		if(!$this->_db->query($sql, array())->error()) {
+			if($this->_db->count()) {
+				return $this->_db->results();
+			}
+		}
 	}
 
 	public function getNextQuestion($studentId, $groupId, $competenceId){
