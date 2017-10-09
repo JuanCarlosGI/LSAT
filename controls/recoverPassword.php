@@ -2,6 +2,7 @@
 require '../core/init.php';
 
 if(Input::exists()) {	
+	
 	$validate = new Validate();
 	$validation = $validate->check($_POST, array(
 		'mail' => array(
@@ -24,19 +25,18 @@ if(Input::exists()) {
 		try {
 			$mailer = new Mailer();
 
-			$user->update(array(
-				'password' 	=> Hash::make($password, $salt),
-				'salt'		=> $salt,
-				), $user->data()->id);
 
 			$to = Input::get('to');
 			$subject = "LSAT - Recuperar contrasena";
 			$message = "Tu nueva contrasena es: $password \n\n Este es un email automático, por favor no responda a este mensaje";
 			$mailer->send($to, $subject, $message);
-
 			$response = array( "message" => "success");
 			echo json_encode($response);	
 
+			$user->update(array(
+				'password' 	=> Hash::make($password, $salt),
+				'salt'		=> $salt,
+				), $user->data()->id);
 		} catch(Exception $e) {
 			die($e->getMessage());
 		}

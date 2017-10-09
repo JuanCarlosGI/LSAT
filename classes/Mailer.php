@@ -1,5 +1,4 @@
 <?php
-
 /*
 	Estamos usando la libreria de PHPMailer para enviar los correos.
 	Pueden encontrar ejemplos y documentacion en la siguiente liga: (https://github.com/PHPMailer/PHPMailer)
@@ -13,7 +12,7 @@
 		public function __construct($token = null) {
 			$this->_db = DB::getInstance();
 			$this->systemMail = 'lsatitesm@gmail.com';
-			$this->systemMailPassword = 'laurasanchez';
+			$this->systemMailPassword = 'LsatItesm2014';
 			$this->systemName = 'LSAT';
 		}
 
@@ -34,7 +33,7 @@
 			$mail->msgHTML($message, dirname(__FILE__));
 			$mail->AltBody = $message;
 
-			$mail->IsSMTP();
+			//$mail->IsSMTP();
 			$mail->Mailer = 'smtp';
 			$mail->SMTPAuth = true;
 			$mail->Host = 'smtp.gmail.com'; 

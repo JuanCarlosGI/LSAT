@@ -51,11 +51,11 @@ $('form#recover').on('submit', function(e) {
 function recoverPassword(zone){
   var mymail = $('input[name="mail"]').val();
   
-$.post( "controls/recoverPassword.php", { mail:mymail })
+$.post( "controls/recoverPassword.php", { mail:mymail, to:mymail})
       .done(function( data ) {
     try{ 
       data = JSON.parse(data);}
-        catch(e){  alert("Hubo un error."); return;}
+        catch(e){  return;}
         if(data.message == 'success'){
           $("#recover").hide();
           $("#wrap").show();
