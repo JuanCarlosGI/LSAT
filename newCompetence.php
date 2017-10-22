@@ -76,8 +76,6 @@ $teacherId = $user->data()->id;
       .done(function( data ) {
       data = JSON.parse(data);
 
-      console.log(data);
-
       var sel1 = document.getElementById('web1');
       var sel2 = document.getElementById('web2');
       var sel3 = document.getElementById('web3');

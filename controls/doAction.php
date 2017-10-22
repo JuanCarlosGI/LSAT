@@ -875,7 +875,7 @@ if(Input::exists()) {
 
 		try{
 			$w = new Web();
-			$list = $w->getWebs();
+			$list = $w->getWebsForTeacher($user->data()->id);
 
 			echo json_encode($list);
 
@@ -886,7 +886,6 @@ if(Input::exists()) {
 		}
 
 		break;
-
 
 		default:
 		echo "Error: 002";
