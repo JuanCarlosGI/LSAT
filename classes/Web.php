@@ -189,6 +189,19 @@ class Web {
 
 	}
 
+	public function getWebs() {
+		$sql = "SELECT * FROM web";
+
+		if(!$this->_db->query($sql)->error()) {
+			if($this->_db->count()) {
+				return $this->_db->results();
+			}
+		}
+
+		return null;
+
+	}
+
 }
 
 ?>

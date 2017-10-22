@@ -867,6 +867,26 @@ if(Input::exists()) {
 
 		break;
 
+		case "getWeb":
+		$user = new User();
+		if($user->data()->role != 'teacher'){
+			return; /*Solo un maestro puede accesar*/
+		}
+
+		try{
+			$w = new Web();
+			$list = $w->getWebs();
+
+			echo json_encode($list);
+
+
+		}catch(Exception $e) {
+			$response = array( "message" => "Error:006 ".$e->getMessage());
+			die(json_encode($response));
+		}
+
+		break;
+
 
 		default:
 		echo "Error: 002";
