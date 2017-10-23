@@ -19,6 +19,16 @@ class Topic {
 		return array();
 	}
 
+	public function getTopic($id) {
+		$sql = "SELECT * FROM topic WHERE id = ?";
+		if(!$this->_db->query($sql, array($id))->error()) {
+			if($this->_db->count()) {
+				return $this->_db->results();
+			}
+		}
+		return array();
+	}
+
 	public function data() {
 		return $this->_data;
 	}

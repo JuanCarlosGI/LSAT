@@ -28,14 +28,14 @@ $teacherQuestions = $question->getAll();
     <?php include 'includes/templates/teacherSidebar.php' ?>
       <div class="large-9 medium-8 columns">
         <h3>Preguntas</h3>
-        <h4 class="subheader">Mis preguntas</h4>
+        <h4 class="subheader">Catálogo de preguntas</h4>
         <hr>
 
         <table>
          <thead>
            <tr>
              <th width="300">Nombre de la pregunta</th>
-             <td width="300"> Id</td>
+             <td width="300">Tema</td>
              <th width="300">Dificultad</th>
              <th width="300"></th>
            </tr>
@@ -43,12 +43,19 @@ $teacherQuestions = $question->getAll();
 
          <tbody>
            <?php
+           $topics = new Topic();
+           $difficulties = new Difficulty();
            foreach ($teacherQuestions as $question) {
-
+              $topic = $topics->getTopic($question->topic)[0];
+              $difficulty = $difficulties->getDifficulty($question->difficulty)[0];
+              $name = "Sin Nombre";
+              if ($question->name != ""){
+                $name = $question->name;
+              }
               echo "<tr id='$question->id'>
-                    <td>$question->name</td>
-                    <td>$question->id</td>
-                    <td>$question->difficulty</td>
+                    <td>$name</td>
+                    <td>$topic->name</td>
+                    <td>$difficulty->name</td>
                     <td> <a href =\"editQuestion.php?qId=$question->id\"class='tiny button secundary'>Editar</a></td>";
             }
          ?>

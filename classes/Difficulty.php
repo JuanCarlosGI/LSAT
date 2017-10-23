@@ -19,6 +19,16 @@ class Difficulty {
 		return array();
 	}
 
+	public function getDifficulty($id) {
+		$sql = "SELECT * FROM difficulty WHERE id = ?";
+		if(!$this->_db->query($sql, array($id))->error()) {
+			if($this->_db->count()) {
+				return $this->_db->results();
+			}
+		}
+		return array();
+	}
+
   public function data() {
 		return $this->_data;
 	}

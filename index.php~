@@ -33,7 +33,7 @@ if ($user->isLoggedIn()){
             <small class="error">An email address is required.</small>
           </div>
           <div class="password-field">
-            <input name="password" placeholder="Password" type="password" pattern="mypassword" style="background-color: white; color:black">
+            <input style="color:black" name="password" placeholder="Password" type="password" pattern="mypassword" style="background-color: white">
             <!-- <small class="error">A password is required.</small> -->
           </div>
           <br/>
