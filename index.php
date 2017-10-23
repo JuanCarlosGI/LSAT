@@ -19,6 +19,7 @@ if ($user->isLoggedIn()){
 <body>
   
   <div class="backgroundImg blured"></div>
+  <br>
   <div class="row centeredXY">
       <div class="text-centered">
         <h1 class="h1-intro">LSAT</h1>
@@ -26,18 +27,19 @@ if ($user->isLoggedIn()){
         <br/><br/>
 
         <form id="login" data-abide="ajax" class="lsatLogin">
-          <div class="mail-field">
+          <br>
+          <div class="mail-field" style="background-color: white">
             <input name="mail" placeholder="E-mail" type="email">
             <small class="error">An email address is required.</small>
           </div>
           <div class="password-field">
-            <input name="password" placeholder="Password" type="password" pattern="mypassword">
+            <input name="password" placeholder="Password" type="password" pattern="mypassword" style="background-color: white">
             <!-- <small class="error">A password is required.</small> -->
           </div>
           <br/>
           <button type="submit" class="small">Login</button>
         </form>
-        <a href="recoverPassword.php">Recuperar contraseña </a>
+        <a style="color: white" href="recoverPassword.php">Recuperar contraseña </a>
       </div>          
   </div>
 
