@@ -33,8 +33,7 @@ $topics = $t->getAllTopics();
         <table> 
          <thead> 
            <tr> 
-             <th width="300">Id</th> 
-             <th width="200">Nombre</th> 
+             <th width="200">Tema</th> 
            </tr> 
          </thead>
 
@@ -42,7 +41,6 @@ $topics = $t->getAllTopics();
            <?php
            foreach ($topics as $topic) {
             echo "<tr id='$topic->id'> 
-            <td> $topic->id </td>
             <td> $topic->name </td>
           </tr>";
         }

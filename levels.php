@@ -33,8 +33,7 @@ $levels = $l->getAllLevels();
         <table> 
          <thead> 
            <tr> 
-             <th width="300">Id</th> 
-             <th width="200">Nombre</th> 
+             <th width="200">Nivel</th> 
            </tr> 
          </thead>
 
@@ -42,7 +41,6 @@ $levels = $l->getAllLevels();
            <?php
            foreach ($levels as $level) {
             echo "<tr id='$level->id'> 
-            <td> $level->id </td>
             <td> $level->name </td>
           </tr>";
         }

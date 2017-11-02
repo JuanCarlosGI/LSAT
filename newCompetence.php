@@ -33,7 +33,7 @@ $teacherId = $user->data()->id;
           <div class="row">
             <label>Nombre de la competencia<input type="text" name="name" id="name"/></label>
 
-            <h5>A continuacion, escribe los ids de las redes que formaran la competencia.</h5>
+            <h5>A continuacion, selecciona las redes que formaran la competencia.</h5>
 			<ol>
       <li><select id="web1">
         <option value= "" selected="selected"></option>
