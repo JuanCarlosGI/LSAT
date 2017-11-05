@@ -242,13 +242,4 @@ class Question {
 			}
 
 	}
-
-	public function getMostDifficultQuestion() {
-		$sql = "SELECT * FROM question";
-		if(!$this->_db->query($sql, array())->error()) {
-			if($this->_db->count()) {
-				return $this->_db->results()[0];
-			}
-		}
-	}
 }
