@@ -202,6 +202,10 @@ class Web {
 
 	}
 
+	public function getTotalMistakes() {
+		rand() * 100;
+	}
+
 }
 
 ?>

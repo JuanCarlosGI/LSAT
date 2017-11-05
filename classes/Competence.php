@@ -458,4 +458,8 @@ class Competence {
 
 	}
 
+	public function getTotalMistakes() {
+		rand() * 100;
+	}
+
 }

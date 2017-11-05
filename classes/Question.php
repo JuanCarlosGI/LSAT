@@ -223,4 +223,20 @@ class Question {
 
 	}
 
+	public function getSuccessRate() {
+		return rand();
+	}
+
+	public getMostDifficultQuestion() {
+		if (count($ids) == 0) return;
+
+		$idList = implode(",", $ids);
+
+		$sql = "SELECT * FROM question WHERE id IN ($idList)";
+		if(!$this->_db->query($sql, array())->error()) {
+			if($this->_db->count()) {
+				return $this->_db->results()[0];
+			}
+		}
+	}
 }

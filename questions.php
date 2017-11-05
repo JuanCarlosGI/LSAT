@@ -7,7 +7,6 @@ $user->checkIsValidUser('teacher');
 $teacherId = $user->data()->id;
 $question = new Question();
 $teacherQuestions = $question->getAll();
-//$teacherQuestions = $question->getQuestionsForTeacher($teacherId);
 
 ?>
 
@@ -19,6 +18,8 @@ $teacherQuestions = $question->getAll();
 </head>
 
 <body>
+
+
 
   <?php include 'includes/templates/header.php' ?>
 
