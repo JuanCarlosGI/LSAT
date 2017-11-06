@@ -204,8 +204,9 @@ $answerD = $answer->getAnswer($questionToEdit->optionD)[0];
 
           <br/>
 
-          <a href="#" onclick="editQuestion()" class="button round small right">Guardar</a>
-
+          <a href="questionDetail.php?qId=<?php echo $qId?>" onclick="editQuestion()" class="button round small right">Guardar</a>
+          
+          <a href="questionDetail.php?qId=<?php echo $qId?>" class="button round small right">Salir Sin Cambios</a>
         </form>
 
       </div>
@@ -270,7 +271,7 @@ $answerD = $answer->getAnswer($questionToEdit->optionD)[0];
         data = JSON.parse(data);
         if(data.message == 'success'){
           alert("La pregunta fue actualizada.");
-          window.location.reload();
+          // window.location.reload();
         }else{
           alert("Error: \n\n" + data.message);
         }
