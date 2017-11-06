@@ -226,20 +226,19 @@ class Question {
 	public function getSuccessRate($questionId = 0) {
 		$sql = "SELECT answer.correct FROM questionsforstudent, answer where questionId = $questionId and selectedAnswer = answer.id and answered = 1";
 		if(!$this->_db->query($sql)->error()) {
-				if($this->_db->count() == 0) {
-					return 0;
-				}else{
-					$count = 0;
-					$correct = 0;
-					foreach ($this->_db->results() as $result) {
-						$count++;
-						if ($result->correct == 1)
-							$correct++;
-					}
-
-					return $correct / $count;
+			if($this->_db->count() == 0) {
+				return -1;
+			}else{
+				$count = 0;
+				$correct = 0;
+				foreach ($this->_db->results() as $result) {
+					$count++;
+					if ($result->correct == 1)
+						$correct++;
 				}
-			}
 
+				return $correct / $count;
+			}
+		}
 	}
 }
