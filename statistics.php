@@ -46,18 +46,24 @@ $teacherQuestions = $question->getAll();
            <?php
            $topics = new Topic();
            $difficulties = new Difficulty();
-           $max = 999999999;
+           $max = 101;
            foreach ($teacherQuestions as $question) {
               $topic = $topics->getTopic($question->topic)[0];
               $difficulty = $difficulties->getDifficulty($question->difficulty)[0];
               $name = "Sin Nombre";
-              $statistic = (new Question())->getSuccessRate($question->id);
-              if($statistic < $max){
+              $statistic = ((new Question())->getSuccessRate($question->id)) * 100;
+              if($statistic < $max && $statistic != -100){
                 $max_id = $question->id;
                 $max_name = $name;
                 $max_topic = $topic;
                 $max_difficulty = $difficulty;
                 $max = $statistic;
+              }
+              if($statistic == -100){
+                $statistic = "No tiene informacion";
+              }
+              else{
+                $statistic = "$statistic%";
               }
               if ($question->name != ""){
                 $name = $question->name;
@@ -66,7 +72,7 @@ $teacherQuestions = $question->getAll();
                     <td>$name</td>
                     <td>$topic->name</td>
                     <td>$difficulty->name</td>
-                    <td>$statistic %</td>";
+                    <td>$statistic</td>";
             }
          ?>
        </tbody>
