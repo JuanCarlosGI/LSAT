@@ -722,7 +722,7 @@ if(Input::exists()) {
 			$spid = intval(Input::get('sp'));
 
 			//Marcar la pregunta dentro de questionsForStudent como contestada
-			$fields = array("answered" => true);
+			$fields = array("answered" => true, "selectedAnswer" => $answerId);
 			if(!$db->update('questionsforstudent', $questionForStudentId, $fields)) {
 				throw new Exception('There was a problem updating QuestionsForStudent.');
 			}

@@ -223,20 +223,23 @@ class Question {
 
 	}
 
-	public function getSuccessRate() {
-		return rand();
-	}
+	public function getSuccessRate($questionId = 0) {
+		$sql = "SELECT answer.correct FROM questionsforstudent, answer where questionId = $questionId and selectedAnswer = answer.id and answered = 1";
+		if(!$this->_db->query($sql)->error()) {
+				if($this->_db->count() == 0) {
+					return 0;
+				}else{
+					$count = 0;
+					$correct = 0;
+					foreach ($this->_db->results() as $result) {
+						$count++;
+						if ($result->correct == 1)
+							$correct++;
+					}
 
-	public getMostDifficultQuestion() {
-		if (count($ids) == 0) return;
-
-		$idList = implode(",", $ids);
-
-		$sql = "SELECT * FROM question WHERE id IN ($idList)";
-		if(!$this->_db->query($sql, array())->error()) {
-			if($this->_db->count()) {
-				return $this->_db->results()[0];
+					return $correct / $count;
+				}
 			}
-		}
+
 	}
 }
