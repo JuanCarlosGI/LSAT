@@ -33,6 +33,7 @@
 
         <li class="heading">Estadisticas</li>
         <li><a href="groupStats.php">Avance por grupo</a></li>
+        <li><a href="statistics.php">Estadisticas</a></li>
 
       </ul>
     </nav>
