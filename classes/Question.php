@@ -241,4 +241,12 @@ class Question {
 			}
 		}
 	}
+
+	public function getPercentageChosen($questionId = 0) {
+		$sql = "SELECT selectedAnswer as answerId, Count(selectedAnswer) as count FROM question, questionsforstudent where question.id = questionId and questionId = $questionId and answered = 1 GROUP BY selectedAnswer";
+		if(!$this->_db->query($sql)->error()) {
+			return $this->_db->results();
+		}
+		return $this->_db->query($sql)->error();
+	}
 }
