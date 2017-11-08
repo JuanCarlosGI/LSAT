@@ -403,6 +403,27 @@ if(Input::exists()) {
 
 		break;
 
+		case "filterCatalog":
+
+		$difficulty = Input::get('difficulty');
+		$topic      = Input::get('topic');
+
+		$question = new Question();
+		$filteredQuestions = $question->getAllFilteredQuestions($topic, $difficulty);
+		foreach ($filteredQuestions as $qu) {
+			
+           $topics = new Topic();
+           $difficulties = new Difficulty();
+          $top = $topics->getTopic($qu->topic)[0];
+          $dif = $difficulties->getDifficulty($qu->difficulty)[0];
+          $qu->topic = $top->name;
+          $qu->difficulty = $dif->name;
+		}
+
+		echo json_encode($filteredQuestions);
+
+		break;
+
 		case "getQuestion":
 
 		$id = Input::get('id');

@@ -31,6 +31,40 @@ class Question {
 		return array();
 	}
 
+	public function getAllFilteredQuestions($topic, $difficulty){
+		if( $topic == 0 && $difficulty == 0){
+			$sql = "SELECT * FROM question";
+			if(!$this->_db->query($sql, array())->error()) {
+				if($this->_db->count()) {
+					return $this->_db->results();
+				}
+			}
+		}
+		else if( $difficulty == 0 ){
+			$sql = "SELECT * FROM question WHERE topic =  ?";
+			if(!$this->_db->query($sql, array($topic))->error()) {
+				if($this->_db->count()) {
+					return $this->_db->results();
+				}
+			}
+		}
+		else if( $topic == 0 ){
+			$sql = "SELECT * FROM question WHERE difficulty = ?";
+			if(!$this->_db->query($sql, array($difficulty))->error()) {
+				if($this->_db->count()) {
+					return $this->_db->results();
+				}
+			}
+		}
+		$sql = "SELECT * FROM question WHERE topic =  ? AND difficulty = ?";
+		if(!$this->_db->query($sql, array($topic, $difficulty))->error()) {
+			if($this->_db->count()) {
+				return $this->_db->results();
+			}
+		}
+		return array();
+	}
+
 	public function getQuestionsForTeacher($techerId = null){
 		if($teacherId = null) return;
 
