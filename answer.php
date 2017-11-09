@@ -134,11 +134,11 @@ foreach ($answersIds as $answerId){
 									<h4>Retroalimentaci&oacuten</h4>
 									<div>
 										<p id=textFeedback></p>
-										<img id=imageFeedback>
+										<p>Puedes ver una explicaci&oacute;n en el siguiente video:</p>
+										<a id=imageFeedback target=\"_blanck\"></a>
 									</div>
 								</div>";
 				?>
-
 				<a id="answerBtn" href="#" onclick="answerQuestion()" class="button round small right">Contestar</a>
 				<a id="nextQBtn" href="#" onclick="nextQuestion()" class="button round small right" style="display:none">Siguiente</a>
 
@@ -205,7 +205,8 @@ foreach ($answersIds as $answerId){
 						$("#textFeedback").append(feedback.textFeedback);
 
 						if (feedback.imageFeedback != "") {
-							$("#imageFeedback").attr({src : feedback.imageFeedback});
+							$("#imageFeedback").attr({href : feedback.imageFeedback});
+							$("#imageFeedback").append(feedback.imageFeedback);
 						}
 
 						$("#feedback").css("display", "");

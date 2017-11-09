@@ -85,7 +85,10 @@ $answerD = $answer->getAnswer($questionToEdit->optionD)[0];
                 <select id="qgrade" name="grade">
                   <?php
                   foreach ($difficulties as $item) {
-                    echo "<option value='$item->id'>$item->name</option>";
+                    $selectedText = "";
+                    if ($item->id == $questionToEdit->difficulty)
+                      $selectedText = " selected ";
+                    echo "<option value='$item->id' $selectedText>$item->name</option>";
                   }
                   ?>
                 </select>
@@ -97,7 +100,10 @@ $answerD = $answer->getAnswer($questionToEdit->optionD)[0];
                 <select id="qtopic" name="topic">
                   <?php
                   foreach ($topics as $item) {
-                    echo "<option value='$item->id'>$item->name</option>";
+                    $selectedText = "";
+                    if ($item->id == $questionToEdit->topic)
+                      $selectedText = " selected ";
+                    echo "<option value='$item->id' $selectedText>$item->name</option>";
                   }
                   ?>
                 </select>
@@ -204,8 +210,9 @@ $answerD = $answer->getAnswer($questionToEdit->optionD)[0];
 
           <br/>
 
-          <a href="#" onclick="editQuestion()" class="button round small right">Guardar</a>
+          <a href="questionDetail.php?qId=<?php echo $qId?>" onclick="editQuestion()" class="button round small right">Guardar</a>
 
+          <a href="questionDetail.php?qId=<?php echo $qId?>" class="button round small right">Salir Sin Cambios</a>
         </form>
 
       </div>
@@ -270,7 +277,7 @@ $answerD = $answer->getAnswer($questionToEdit->optionD)[0];
         data = JSON.parse(data);
         if(data.message == 'success'){
           alert("La pregunta fue actualizada.");
-          window.location.reload();
+          // window.location.reload();
         }else{
           alert("Error: \n\n" + data.message);
         }

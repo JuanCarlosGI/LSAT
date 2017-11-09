@@ -4,6 +4,8 @@ class Question {
 	private $_db,
 	$_tableName = 'question';
 
+	public $stat;
+	public $statNum;
 	public function __construct() {
 		$this->_db = DB::getInstance();
 	}
@@ -257,4 +259,30 @@ class Question {
 
 	}
 
+	public function getSuccessRate($questionId = 0) {
+		$sql = "SELECT answer.correct FROM questionsforstudent, answer where questionId = $questionId and selectedAnswer = answer.id and answered = 1";
+		if(!$this->_db->query($sql)->error()) {
+			if($this->_db->count() == 0) {
+				return -1;
+			}else{
+				$count = 0;
+				$correct = 0;
+				foreach ($this->_db->results() as $result) {
+					$count++;
+					if ($result->correct == 1)
+						$correct++;
+				}
+
+				return $correct / $count;
+			}
+		}
+	}
+
+	public function getPercentageChosen($questionId = 0) {
+		$sql = "SELECT selectedAnswer as answerId, Count(selectedAnswer) as count FROM question, questionsforstudent where question.id = questionId and questionId = $questionId and answered = 1 GROUP BY selectedAnswer";
+		if(!$this->_db->query($sql)->error()) {
+			return $this->_db->results();
+		}
+		return $this->_db->query($sql)->error();
+	}
 }

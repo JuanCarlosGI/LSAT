@@ -418,6 +418,18 @@ if(Input::exists()) {
           $dif = $difficulties->getDifficulty($qu->difficulty)[0];
           $qu->topic = $top->name;
           $qu->difficulty = $dif->name;
+           $statistic = ((new Question())->getSuccessRate($qu->id)) * 100;
+              $statNum = $statistic / 100;
+              if($statNum == -1)
+                $statNum = 0;
+              if($statistic == -100){
+                $statistic = "No tiene informacion";
+              }
+              else{
+                $statistic = "$statistic%";
+              }
+           $qu->stat = $statistic;
+           $qu->statNum = $statNum;
 		}
 
 		echo json_encode($filteredQuestions);
@@ -743,7 +755,7 @@ if(Input::exists()) {
 			$spid = intval(Input::get('sp'));
 
 			//Marcar la pregunta dentro de questionsForStudent como contestada
-			$fields = array("answered" => true);
+			$fields = array("answered" => true, "selectedAnswer" => $answerId);
 			if(!$db->update('questionsforstudent', $questionForStudentId, $fields)) {
 				throw new Exception('There was a problem updating QuestionsForStudent.');
 			}
