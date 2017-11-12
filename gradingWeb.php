@@ -13,9 +13,6 @@ $competenceId = Input::get("c");
 
 $webInCompetence = $web->getWebsInCompetenceId($webId, $competenceId);
 $isGraded = $webInCompetence->isGraded;
-if($isGraded) {
-	Redirect::to('competenceDetail.php?competence='.$competenceId);
-}
 
 $c = new Competence();
 $competence = $c->getCompetence($competenceId);
@@ -77,9 +74,9 @@ $answers = $answer->getAnswersForQuestionList($questions);
                             <table width='100%'>
                               <thead>
                                 <tr>
-																	<th width='10%'>Ponderaci&oacuten</th>
-                                  <th width='45%'>Respuesta</th>
-                                  <th width='45%'>Feedback</th>
+									<th width='10%'>Ponderaci&oacuten</th>
+                                	<th width='45%'>Respuesta</th>
+                                	<th width='45%'>Feedback</th>
                                 </tr>
                               </thead>
                               <tbody>";

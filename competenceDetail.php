@@ -60,7 +60,7 @@ $websInCompetence = $c->getWebsInCompetence($competenceId);
             <td> $web->name </td>";
 
             if($web->isGraded){
-              echo "<td> La red ya fue ponderada </td>";
+              echo "<td><a href=\"editGradingWeb.php?web=$web->webId&c=$competenceId\" class='tiny button secondary'>Editar Ponderación</a>  </td>";
             }else{
               echo "<td> <a href=\"gradingWeb.php?web=$web->webId&c=$competenceId\" class='tiny button secondary'>Ponderar</a> </td>";
             }

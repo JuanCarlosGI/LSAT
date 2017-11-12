@@ -62,6 +62,14 @@ class DB {
 		return $this->action('DELETE', $table, $where);
 	}
 
+	public function executeSql($query) {
+		if(!$this->query($query)->error()) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+
 	public function action($action, $table, $where = array()) {
 		if(count($where) === 3) {
 			$operators = array('=', '>', '<', '>=', '<=');
@@ -89,6 +97,8 @@ class DB {
 				echo($this->error());
 		}
 	}
+
+
 
 	public function insert($table, $fields = array()) {
 		$keys 	= array_keys($fields);
