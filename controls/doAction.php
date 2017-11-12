@@ -659,6 +659,59 @@ if(Input::exists()) {
 
 		break;
 
+		case "editGradeWeb":
+		$user = new User();
+		if($user->data()->role != 'teacher'){
+			return; /*Solo un maestro puede asignar valores a la red*/
+		}
+
+		//Necesitamos el id del profesor, que es el usuario logueado
+		$teacherId = $user->data()->id;
+
+		try{
+
+			$data = Input::get('data');
+			$webId = Input::get('webId');
+			$competenceId = Input::get('cId');
+
+			$w = new Web();
+			$websInCompetenceId = $w->getWebsInCompetenceId($webId, $competenceId);
+
+			$db = DB::getInstance();
+
+			//Guardar la ponderacion de cada pregunta para esa combinacion de red y competencia especifica
+			foreach ($data as $key => $p) {
+				$splitKey = explode('-', $key);
+
+				$grade = intval($p); //$p es la ponderacion en un string
+				$questionId = $splitKey[0];
+				$answerId = $splitKey[1];
+
+				$sql = "UPDATE answersinwebsincompetence SET grade = $grade WHERE answerId = $answerId AND webInCompetence IN (
+				SELECT id FROM websincompetence WHERE competenceId = $competenceId and webId = $webId)";
+				
+
+
+				$db->executeSql($sql);
+
+			}
+
+			//Una vez que se le asigno una ponderacion a cada pregunta
+			//hay que decir que esa combinacion de red y competencia ya fue ponderada en su totalidad
+
+			$db->update("websincompetence", $websInCompetenceId->id, array("isGraded" => true));
+
+
+		} catch(Exception $e) {
+			$response = array( "message" => "Error:006 ".$e->getMessage());
+			die(json_encode($response));
+		}
+
+		$response = array( "message" => "success");
+		echo json_encode($response);
+
+		break;
+
 		case "publishCompetence":
 		$user = new User();
 		if($user->data()->role != 'teacher'){

@@ -460,4 +460,15 @@ class Competence {
 		rand() * 100;
 	}
 
+	public function getGrade($answerId, $webInCompetenceId) {
+		$sql = "SELECT grade FROM answersinwebsincompetence WHERE answerId = $answerId and webInCompetence = $webInCompetenceId";
+		if(!$this->_db->query($sql, array($answerId, $webInCompetenceId))->error()) {
+			if($this->_db->count()) {
+				$grade = $this->_db->results()[0]->grade;
+				return $grade;
+			}
+		}
+		return array();
+	}
+
 }
