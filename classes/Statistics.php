@@ -79,9 +79,46 @@ class Statistics {
 	}
 
 	return $results;
-
 }
 
+	public function getCompetenceProgress($groupId, $competenceId) {
+		$g = new Groups();
+		$u = new User();
+		$c = new Competence();
 
+		$students = $g->getAllStudentsFromGroup($groupId);
+
+		$blocked = 0;
+		$notStarted = 0;
+		$started = 0;
+		$finished = 0;
+		foreach ($students as $key => $student) {
+			$studentId = $student->id;
+			
+			$studentProgress = $u->getStudentProgress($studentId, $groupId, $competenceId);
+			if(count($studentProgress) == 0) {
+				$notStarted++;
+			} else {
+				$isBlocked = $c->isCompetenceBlocked($studentId, $groupId, $competenceId);
+				if($isBlocked == true) {
+					$blocked++;
+				} else {
+					$isCompleted = $c->isCompetenceCompleted($studentProgress);
+					if($isCompleted == true) {
+						$finished++;
+					} else {
+						$started++;
+					}
+				}
+			}
+		}
+
+		return [
+			"blocked" => $blocked,
+			"notStarted" => $notStarted,
+			"started" => $started,
+			"finished" => $finished
+		];
+	}
 
 }

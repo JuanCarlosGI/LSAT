@@ -410,8 +410,6 @@ class Competence {
 			$response = array( "message" => "Error:015 ".$e->getMessage());
 			die(json_encode($response));
 		}
-
-
 	}
 
 	public function deleteStudentProgress($studentId, $groupId, $competenceId) {

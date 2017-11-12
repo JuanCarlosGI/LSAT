@@ -228,8 +228,10 @@ $answerD = $answer->getAnswer($questionToEdit->optionD)[0];
 
     $stats = (new Question())->getPercentageChosen($qId);
     foreach ($stats as $stat) {
-      $questionOption = "Opción 1";
-      if ($stat->answerId == $questionToEdit->optionB)
+      $questionOption = "Otra";
+      if ($stat->answerId == $questionToEdit->optionA)
+        $questionOption = "Opción 1";
+      else if ($stat->answerId == $questionToEdit->optionB)
         $questionOption = "Opción 2";
       else if ($stat->answerId == $questionToEdit->optionC)
         $questionOption = "Opción 3";

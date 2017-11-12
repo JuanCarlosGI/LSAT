@@ -24,7 +24,7 @@ class Groups {
 	public function getGroupsForTeacher($teacherId = null){
 		if ($teacherId == null) return;
 
-		$db = $this->_db->get($this->_tableName, array('professor', '=', $teacherId));
+		$db = $this->_db->get($this->_tableName, array('active = 1 and professor', '=', $teacherId));
 
 		if($db && $db->count()) {
 			return $db->results();
@@ -108,6 +108,10 @@ class Groups {
 
 	public function data() {
 		return $this->_data;
+	}
+
+	public function deactivate($groupId) {
+		$this->update($groupId,array('active'=>'0'));
 	}
 
 }

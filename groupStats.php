@@ -36,12 +36,30 @@ $teacherGroups = $groups->getGroupsForTeacher($teacherId);
         <?php
         foreach ($teacherGroups as $group) {
           $results = $s->getGroupProgress($group->id);
+          $competences = $groups->getCompetencesForGroup($group->id);
           $activeCompNumber = $results["activeCompNumber"];
           $studentsProgress = $results["students"];
 
           echo "<div id='$group->id'>
-                <h5> $group->name </h5>
+                <h2> $group->name </h5>
                 <h6> Numero de competencias activas: $activeCompNumber</h6>";
+
+          echo "<table>
+                    <thead>
+                      <tr>
+                        <th width='300'>Competencia</th>
+                        <th width='300'></th>
+                        </tr>
+                    </thead>
+                    <tbody> ";
+
+          foreach ($competences as $competence) {
+            echo "<tr>
+                    <td>$competence->name</td>
+                    <td><a href='competenceProgress.php?cId=$competence->id&gId=$group->id'>Ver avance</a></td>";
+          }
+
+          echo "</tbody> </table>";
           if(isset($studentsProgress)) {
             echo "<table>
                     <thead>

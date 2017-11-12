@@ -153,6 +153,23 @@ if(Input::exists()) {
 		echo json_encode($response);
 		break;
 
+		case "deactivateGroup":
+		try {
+
+			$groups = new Groups();
+
+			$groupId = Input::get('g');
+
+			$groups->deactivate($groupId);
+		} catch(Exception $e) {
+			$response = array( "message" => "Error:004 ".$e->getMessage());
+			die(json_encode($response));
+		}
+		$response = array( "message" => "success");
+		echo json_encode($response);
+		break;
+
+
 		case "createGroup":
 
 		try {

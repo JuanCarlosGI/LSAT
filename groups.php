@@ -36,7 +36,8 @@ $teacherGroups = $groups->getGroupsForTeacher($teacherId);
          <thead> 
            <tr> 
              <th width="300">Grupo</th> 
-             <th width="300">Editar</th> 
+             <th width="300">Editar</th>
+             <th width="300">Desactivar</th> 
            </tr> 
          </thead>
 
@@ -47,6 +48,7 @@ $teacherGroups = $groups->getGroupsForTeacher($teacherId);
             echo "<tr id='$group->id'> 
             <td> <a href='group.php?id=$group->id'> $group->name </a> </td>
             <td> <a href='editGroup.php?g=$group->id' class='tiny button secondary'>Editar</a> </td> 
+            <td> <a href='#' onclick='Deactivate($group->id)' class='tiny button secondary'>Desactivar</a> </td>
           </tr>";
         }
         ?>
@@ -66,6 +68,22 @@ $teacherGroups = $groups->getGroupsForTeacher($teacherId);
 <script src="js/foundation.min.js"></script>
 <script>
   $(document).foundation();
+
+  function Deactivate(groupId) {
+    if (confirm("¿Estas seguro que deseas desactivar este grupo?")) {
+      $.post( "controls/doAction.php", { action:"deactivateGroup", g:groupId })
+        .done(function( data ) {
+          console.log(data);
+          data = JSON.parse(data);
+          if(data.message == 'success'){
+            window.location.replace('./groups.php');
+          }else{
+            alert("There was an error: " + data.message);
+          }
+
+        });
+    }
+  }
 
 </script>
 </body>
