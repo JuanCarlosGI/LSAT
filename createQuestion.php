@@ -44,7 +44,8 @@ $topics = $topic->getTopics();
             <div class="row">
                 <div class="large-12 columns">
                     <label>Texto de la pregunta
-                        <textarea id="qtext" name="text" style="width:100%; height: 200px;"></textarea>
+                    	<br>
+                        <input id="qname" name="name" style="width:50%;"></input>
                     </label>
                 </div>
             </div>
