@@ -56,7 +56,7 @@ $teacherGroups = $groups->getGroupsForTeacher($teacherId);
           foreach ($competences as $competence) {
             echo "<tr>
                     <td>$competence->name</td>
-                    <td><a href='competenceProgress.php?cId=$competence->id&gId=$group->id'>Ver avance</a></td>";
+                    <td><a target='_blank' href='competenceProgress.php?cId=$competence->id&gId=$group->id'>Ver avance</a></td>";
           }
 
           echo "</tbody> </table>";

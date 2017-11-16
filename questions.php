@@ -246,7 +246,7 @@ function createPlot(successRate, canvas) {
         difficulty: difficulty})
 
       .done(function( data ) {
-      //console.log(data);
+      console.log(data);
 
       data = JSON.parse(data);
       if(data.message == 'error'){
@@ -256,15 +256,15 @@ function createPlot(successRate, canvas) {
 
         data.sort(function(a, b){
           if(a.stat == "No tiene informacion" && b.stat == "No tiene informacion"){
-            return 0;
+            return -1;
           }
           if(a.stat == "No tiene informacion"){
-            return 101-b.stat;
+            return 101- b.statNum*100;
           }
           if(b.stat == "No tiene informacion"){
-            return a.stat -101;
+            return a.statNum*100 -101;
           }
-          return a.stat-b.stat});
+          return a.statNum*100-b.statNum*100});
 
         var i;
         var tbody = $("table.results tbody");
