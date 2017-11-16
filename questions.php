@@ -117,7 +117,7 @@ function createPlot(successRate, canvas) {
 </script>
 </head>
 
-<body>
+<body onload="filterQuestions()">
 
 
 
@@ -189,6 +189,7 @@ function createPlot(successRate, canvas) {
 
          <tbody>
            <?php
+           /*
            $topics = new Topic();
            $difficulties = new Difficulty();
            foreach ($teacherQuestions as $question) {
@@ -217,7 +218,7 @@ function createPlot(successRate, canvas) {
                     <td>$statistic
                     <td><canvas style=\"display:block;width:12vw;height:5vw;\" id=\"Canvas$question->id\"></canvas></td>
                     <script>createPlot($statNum, Canvas$question->id);</script>";
-            }
+            }*/
          ?>
        </tbody>
      </table>
@@ -252,7 +253,18 @@ function createPlot(successRate, canvas) {
         alert("Error: \n\n" + data.message);
       }else{
         //Llenar el contenedor con las preguntas
-        console.log(data);
+
+        data.sort(function(a, b){
+          if(a.stat == "No tiene informacion" && b.stat == "No tiene informacion"){
+            return 0;
+          }
+          if(a.stat == "No tiene informacion"){
+            return 101-b.stat;
+          }
+          if(b.stat == "No tiene informacion"){
+            return a.stat -101;
+          }
+          return a.stat-b.stat});
 
         var i;
         var tbody = $("table.results tbody");
@@ -263,8 +275,8 @@ function createPlot(successRate, canvas) {
           var t = "<tr id='$question'><td><a href =\"questionDetail.php?qId=$question\">$name</a></td><td>$topic</td><td>$difficulty</td><td>$statistic<td><canvas style= \"display:block;width:12vw;height:5vw;\" id=\"Canvas$question\"></canvas></td><script>createPlot($statNum, Canvas$question);<\/script>";
           //console.log(t);
           var name = "Sin Nombre";
-          if (data[i].id != ""){
-            $name = data[i].id;
+          if (data[i].name != null){
+            name = data[i].name;
           } 
 
 
